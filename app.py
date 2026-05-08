@@ -13,13 +13,13 @@ from rag_utility import process_document_to_chroma_db, answer_question
 working_dir = os.path.dirname(os.path.abspath(__file__))
 vectordb_path = os.path.join(working_dir, "doc_vectorstore")
 resume_path = os.path.join(working_dir, "resume.pdf")
-ADMIN_PASSWORD = "najeeb2026"  # Change to your own password
+ADMIN_PASSWORD = "Rebin"  # Change to your own password
 
 # ═══════════════════════════════════════
 # PAGE SETUP
 # ═══════════════════════════════════════
 st.set_page_config(
-    page_title="Ask About Najeeb",
+    page_title="Ask About Rebin",
     page_icon="🦙",
     layout="centered"
 )
@@ -82,8 +82,8 @@ with st.sidebar:
 # ═══════════════════════════════════════
 # MAIN UI
 # ═══════════════════════════════════════
-st.title("🦙 Ask About Najeeb")
-st.caption("Get to know Muhammed Najeeb — ask anything about his skills, projects, or experience!")
+st.title("🦙 Ask About Rebin")
+st.caption("Get to know Muhammed Rebin — ask anything about his skills, projects, or experience!")
 
 st.markdown("---")
 

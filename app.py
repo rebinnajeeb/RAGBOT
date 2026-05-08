@@ -39,7 +39,7 @@ def initialize_resume():
         with st.spinner("🔄 Loading resume into vector database..."):
             process_document_to_chroma_db("resume.pdf")
         
-        st.success("✅ Resume loaded successfully!")
+        
     return True
 
 # Initialize on app startup

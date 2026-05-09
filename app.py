@@ -162,4 +162,4 @@ if st.session_state.chat_history:
 
 # Footer
 st.markdown("---")
-st.caption("🚀 Built by Muhammed Rebin Najeeb | Powered by Llama 3.3 70B + RAG")
+st.caption("🚀 Built by Muhammed Rebin Najeeb | RAG-BOT")

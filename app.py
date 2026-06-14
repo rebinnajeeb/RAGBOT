@@ -13,13 +13,13 @@ from rag_utility import process_document_to_chroma_db, answer_question
 working_dir = os.path.dirname(os.path.abspath(__file__))
 vectordb_path = os.path.join(working_dir, "doc_vectorstore")
 resume_path = os.path.join(working_dir, "resume.pdf")
-ADMIN_PASSWORD = "Rebin"  # Change to your own password
+ADMIN_PASSWORD = "najeeb2026"  # Change to your own password
 
 # ═══════════════════════════════════════
 # PAGE SETUP
 # ═══════════════════════════════════════
 st.set_page_config(
-    page_title="Ask About Rebin",
+    page_title="Ask About Najeeb",
     page_icon="🦙",
     layout="centered"
 )
@@ -35,11 +35,11 @@ def initialize_resume():
         if not os.path.exists(resume_path):
             st.error("❌ resume.pdf not found in project folder!")
             st.stop()
-        
+
         with st.spinner("🔄 Loading resume into vector database..."):
             process_document_to_chroma_db("resume.pdf")
-        
-        
+
+        st.success("✅ Resume loaded successfully!")
     return True
 
 # Initialize on app startup
@@ -82,8 +82,8 @@ with st.sidebar:
 # ═══════════════════════════════════════
 # MAIN UI
 # ═══════════════════════════════════════
-st.title("🦙 Ask About Rebin")
-st.caption("Get to know Muhammed Rebin — ask anything about his skills, projects, or experience!")
+st.title("🦙 Ask About Najeeb")
+st.caption("Get to know Muhammed Najeeb — ask anything about his skills, projects, or experience!")
 
 st.markdown("---")
 
@@ -92,7 +92,7 @@ st.markdown("---")
 # ═══════════════════════════════════════
 if st.session_state.admin_mode:
     st.markdown("### 📤 Upload Document (Admin Only)")
-
+    st.warning("⚠️ Note: Admin uploads are temporary. For permanent docs, push to GitHub.")
     
     uploaded_file = st.file_uploader(
         "Upload PDF (certificate, project doc, etc.)",
@@ -118,7 +118,7 @@ if st.session_state.admin_mode:
 # Suggested questions
 with st.expander("💡 Try asking these questions"):
     st.markdown("""
-    - What are Rebin's technical skills?
+    - What are Najeeb's technical skills?
     - Tell me about his projects
     - Where did he study?
     - What is his work experience?
@@ -135,7 +135,7 @@ for chat in st.session_state.chat_history:
         st.markdown(chat["answer"])
 
 # Chat input
-user_question = st.chat_input("Ask anything about Rebin...")
+user_question = st.chat_input("Ask anything about Najeeb...")
 
 if user_question:
     # Show user's question
@@ -162,4 +162,4 @@ if st.session_state.chat_history:
 
 # Footer
 st.markdown("---")
-st.caption("🚀 Built by Muhammed Rebin Najeeb | RAG-BOT")
+st.caption("🚀 Built by Muhammed Najeeb | Powered by Llama 3.3 70B + RAG")

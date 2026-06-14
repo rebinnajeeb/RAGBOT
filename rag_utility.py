@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_chroma import Chroma
+from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -11,12 +11,20 @@ from langchain_core.runnables import RunnablePassthrough
 
 load_dotenv()
 working_dir = os.path.dirname(os.path.abspath((__file__)))
-embedding = HuggingFaceEmbeddings()
+
+# Small + fast model keeps memory low on Streamlit's free tier
+embedding = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
     temperature=0
 )
+
+# In-memory vector store. Lives at module level so it stays populated across
+# Streamlit reruns within the same process. No chromadb -> no protobuf/
+# opentelemetry conflict, so the app actually boots on Streamlit Cloud.
+vectorstore = InMemoryVectorStore(embedding)
+
 
 def process_document_to_chroma_db(file_name):
     loader = PyPDFLoader(f"{working_dir}/{file_name}")
@@ -26,19 +34,12 @@ def process_document_to_chroma_db(file_name):
         chunk_overlap=200
     )
     texts = text_splitter.split_documents(documents)
-    vectordb = Chroma.from_documents(
-        documents=texts,
-        embedding=embedding,
-        persist_directory=f"{working_dir}/doc_vectorstore"
-    )
+    vectorstore.add_documents(texts)
     return 0
 
+
 def answer_question(user_question):
-    vectordb = Chroma(
-        persist_directory=f"{working_dir}/doc_vectorstore",
-        embedding_function=embedding
-    )
-    retriever = vectordb.as_retriever()
+    retriever = vectorstore.as_retriever()
     prompt = ChatPromptTemplate.from_template("""
     You are a helpful assistant answering questions about Muhammed Najeeb.
 

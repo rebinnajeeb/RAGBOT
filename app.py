@@ -66,7 +66,7 @@ def push_file_to_github(file_name, file_bytes):
 # PAGE SETUP
 # ═══════════════════════════════════════
 st.set_page_config(
-    page_title="Ask About Najeeb",
+    page_title="Ask About Rebin",
     page_icon="🦙",
     layout="centered"
 )

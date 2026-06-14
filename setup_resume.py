@@ -18,7 +18,7 @@ print("📄 Found resume.pdf")
 print("🔄 Loading into vector database...\n")
 
 # Process resume
-process_document_to_chroma_db("resume.pdf")
+process_document_to_chroma_db("Muhammed_Rebin_Najeeb_Resume.pdf")
 
 print("✅ Resume loaded successfully!")
 print("\n🚀 Now run: streamlit run app.py")
